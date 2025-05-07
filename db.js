@@ -1,118 +1,210 @@
-// MongoDB数据服务层
+// 数据服务层
 
-class MongoDBService {
+class DataService {
     constructor() {
-        this.mongoUrl = process.env.MONGODB_URL || 'mongodb://localhost:27017';
-        this.dbName = process.env.MONGODB_DB || 'nw_admin';
-        this.client = null;
-        this.db = null;
-    }
-
-    // 连接数据库
-    async connect() {
-        if (!this.client) {
-            try {
-                if (!process.env.MONGODB_URL || !process.env.MONGODB_DB) {
-                    throw new Error('MongoDB环境变量未正确配置');
-                }
-                const { MongoClient } = require('mongodb');
-                console.log('正在连接MongoDB:', this.mongoUrl);
-                this.client = await MongoClient.connect(this.mongoUrl);
-                this.db = this.client.db(this.dbName);
-                console.log('MongoDB连接成功，数据库:', this.dbName);
-            } catch (error) {
-                console.error('MongoDB连接错误:', error.message);
-                console.error('环境变量状态:', {
-                    MONGODB_URL: process.env.MONGODB_URL ? '已设置' : '未设置',
-                    MONGODB_DB: process.env.MONGODB_DB ? '已设置' : '未设置'
-                });
-                throw error;
-            }
-        }
-        return this.db;
-    }
-
-    // 关闭连接
-    async close() {
-        if (this.client) {
-            await this.client.close();
-            this.client = null;
-            this.db = null;
-        }
+        this.apiBaseUrl = 'http://localhost:3000/api'; // API基础路径
+        this.isAuthenticated = false;
     }
 
     // 用户认证相关操作
     async verifyUser(username, password) {
         try {
             console.log('正在验证用户:', username);
-            const db = await this.connect();
-            const user = await db.collection('users').findOne({ username });
-            if (!user) {
-                console.log('用户不存在:', username);
-                return false;
+            const response = await fetch(`${this.apiBaseUrl}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('登录失败:', errorData.message);
+                throw new Error(errorData.message || '登录失败');
             }
-            const isValid = user.password === password;
-            console.log('密码验证结果:', isValid ? '成功' : '失败');
-            return isValid;
+
+            const data = await response.json();
+            this.isAuthenticated = true;
+            console.log('登录成功');
+            return true;
         } catch (error) {
-            console.error('用户验证错误:', error.message);
+            console.error('验证错误:', error.message);
+            this.isAuthenticated = false;
             throw error;
         }
     }
 
     async updatePassword(username, newPassword) {
-        const db = await this.connect();
-        await db.collection('users').updateOne(
-            { username },
-            { $set: { password: newPassword } }
-        );
+        try {
+            if (!this.isAuthenticated) {
+                throw new Error('用户未登录');
+            }
+
+            const response = await fetch(`${this.apiBaseUrl}/auth/update-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, newPassword })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || '密码更新失败');
+            }
+
+            console.log('密码更新成功');
+            return true;
+        } catch (error) {
+            console.error('密码更新错误:', error.message);
+            throw error;
+        }
     }
 
     // Logo相关操作
     async saveLogo(logoData, logoType) {
-        const db = await this.connect();
-        await db.collection('settings').updateOne(
-            { type: 'logo' },
-            { 
-                $set: { 
-                    data: logoData,
-                    type: logoType,
-                    updateTime: new Date()
-                }
-            },
-            { upsert: true }
-        );
+        localStorage.setItem('logo', JSON.stringify({
+            data: logoData,
+            type: logoType,
+            updateTime: new Date().toISOString()
+        }));
     }
 
     async getLogo() {
-        const db = await this.connect();
-        return await db.collection('settings').findOne({ type: 'logo' });
+        const logoData = localStorage.getItem('logo');
+        return logoData ? JSON.parse(logoData) : null;
     }
 
     // 主题设置相关操作
     async saveTheme(theme) {
-        const db = await this.connect();
-        await db.collection('settings').updateOne(
-            { type: 'theme' },
-            { 
-                $set: { 
-                    value: theme,
-                    updateTime: new Date()
-                }
-            },
-            { upsert: true }
-        );
+        localStorage.setItem('theme', JSON.stringify({
+            value: theme,
+            updateTime: new Date().toISOString()
+        }));
     }
 
     async getTheme() {
-        const db = await this.connect();
-        const theme = await db.collection('settings').findOne({ type: 'theme' });
-        return theme ? theme.value : null;
+        const themeData = localStorage.getItem('theme');
+        return themeData ? JSON.parse(themeData).value : null;
+    }
+}
+
+class MongoDBService {
+    constructor() {
+        this.apiBaseUrl = 'http://localhost:3000/api';
+        this.isAuthenticated = false;
+    }
+
+    // 分类管理相关操作
+    async saveCategory(categoryData) {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/categories`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(categoryData)
+            });
+
+            if (!response.ok) {
+                throw new Error('保存分类失败');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('保存分类错误:', error.message);
+            throw error;
+        }
+    }
+
+    async getCategories() {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/categories`);
+            if (!response.ok) {
+                throw new Error('获取分类列表失败');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('获取分类列表错误:', error.message);
+            throw error;
+        }
+    }
+
+    // 网站管理相关操作
+    async saveSite(siteData) {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/sites`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(siteData)
+            });
+
+            if (!response.ok) {
+                throw new Error('保存网站失败');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('保存网站错误:', error.message);
+            throw error;
+        }
+    }
+
+    async getSites() {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/sites`);
+            if (!response.ok) {
+                throw new Error('获取网站列表失败');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('获取网站列表错误:', error.message);
+            throw error;
+        }
+    }
+
+    async verifyUser(username, password) {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (!response.ok) {
+                if (response.status === 404) {
+                    throw new Error('登录API端点不存在，请检查服务器是否运行正常');
+                } else if (response.status === 401) {
+                    throw new Error('用户名或密码错误');
+                } else if (response.status >= 500) {
+                    throw new Error('服务器内部错误，请稍后再试');
+                }
+                try {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || '登录失败');
+                } catch (e) {
+                    throw new Error('服务器返回了无效的响应');
+                }
+            }
+
+            this.isAuthenticated = true;
+            return true;
+        } catch (error) {
+            this.isAuthenticated = false;
+            throw error;
+        }
     }
 }
 
 // 创建单例实例
-const dbService = new MongoDBService();
+const dataService = new DataService();
+const mongoDBService = new MongoDBService();
 
 // 导出数据服务实例
-window.dbService = dbService;
+window.dataService = dataService;
+window.MongoDBService = MongoDBService;

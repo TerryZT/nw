@@ -66,6 +66,10 @@ const auth = {
 // 导出到全局作用域
 window.auth = auth;
 
+// 初始化数据库服务
+window.dbService = new window.MongoDBService();
+window.dbService.apiBaseUrl = 'http://localhost:3000/api';
+
 // 页面加载完成后初始化登录按钮事件
 document.addEventListener('DOMContentLoaded', function() {
     const adminLoginBtn = document.getElementById('adminLoginBtn');
