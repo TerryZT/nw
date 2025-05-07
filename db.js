@@ -5,7 +5,7 @@ class DataService {
         // 根据当前环境动态设置API基础路径
         this.apiBaseUrl = window.location.hostname === 'localhost' 
             ? 'http://localhost:3000/api'
-            : 'https://navigation-bnec.vercel.app/api';
+            : window.location.origin + '/api';
         this.isAuthenticated = false;
     }
 
@@ -98,7 +98,7 @@ class MongoDBService {
         // 根据当前环境动态设置API基础路径
         this.apiBaseUrl = window.location.hostname === 'localhost' 
             ? 'http://localhost:3000/api'
-            : 'https://navigation-bnec.vercel.app/api';
+            : window.location.origin + '/api';
         this.isAuthenticated = false;
     }
 
