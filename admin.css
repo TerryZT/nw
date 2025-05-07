@@ -1,0 +1,318 @@
+/* 管理页面基本样式 */
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--dark-border);
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.admin-content {
+    display: none;
+}
+
+.back-btn {
+    padding: 0.8rem 1.5rem;
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: var(--dark-card-hover-bg);
+}
+
+/* 管理区块通用样式 */
+.admin-section {
+    background-color: var(--dark-card-bg);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px var(--dark-shadow);
+}
+
+.admin-section h2 {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+/* 主题预览样式 */
+.theme-settings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.theme-preview {
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.preview-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.preview-btn:hover {
+    background-color: var(--dark-card-hover-bg);
+}
+
+/* 分类管理样式 */
+.category-manager {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--dark-card-hover-bg);
+    border-radius: 8px;
+    cursor: move;
+}
+
+.category-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-btn,
+.delete-btn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-btn {
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+}
+
+.delete-btn {
+    background-color: #ff4444;
+    color: white;
+}
+
+.add-category-btn,
+.add-site-btn {
+    padding: 1rem;
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-category-btn:hover,
+.add-site-btn:hover {
+    background-color: var(--dark-card-hover-bg);
+}
+
+/* 网站管理样式 */
+.site-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.site-filters select,
+.site-filters input {
+    padding: 0.8rem;
+    border: 1px solid var(--dark-border);
+    border-radius: 6px;
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+}
+
+.site-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.site-list .card {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--dark-card-bg);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--dark-text);
+    gap: 1rem;
+}
+
+.site-list .card img {
+    width: var(--image-size);
+    height: var(--image-size);
+    object-fit: cover;
+    border-radius: var(--image-border-radius);
+    overflow: hidden;
+}
+
+.site-list .card .card-content {
+    flex: 1;
+}
+
+.site-list .card h4 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.site-list .card p {
+    margin: 0.5rem 0 0;
+    font-size: 0.875rem;
+}
+
+/* 版权信息设置样式 */
+.copyright-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.copyright-settings input[type="text"] {
+    width: 80%;
+    min-width: 160px;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid var(--dark-border);
+    border-radius: 8px;
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.developer-link-settings input[type="text"] {
+    width: 100%;
+    min-width: 200px;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--dark-border);
+    border-radius: 8px;
+    background-color: var(--dark-card-bg);
+    min-height: 60px;
+    color: var(--dark-text);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.site-list .card:hover {
+    background-color: var(--dark-card-hover-bg);
+    transform: translateY(-2px);
+}
+
+/* 搜索设置样式 */
+.search-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.setting-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+.setting-item input[type="number"] {
+    width: 80px;
+    padding: 0.5rem;
+    border: 1px solid var(--dark-border);
+    border-radius: 4px;
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+}
+
+/* 浅色主题适配 */
+.light-theme .admin-section,
+.light-theme .back-btn,
+.light-theme .preview-btn,
+.light-theme .category-item,
+.light-theme .edit-btn,
+.light-theme .add-category-btn,
+.light-theme .add-site-btn,
+.light-theme .site-filters select,
+.light-theme .site-filters input,
+.light-theme .setting-item input[type="number"],
+.light-theme .copyright-settings input[type="text"] {
+    background-color: var(--light-card-bg);
+    color: var(--light-text);
+}
+
+.light-theme .admin-section:hover,
+.light-theme .back-btn:hover,
+.light-theme .preview-btn:hover,
+.light-theme .category-item:hover,
+.light-theme .edit-btn:hover,
+.light-theme .add-category-btn:hover,
+.light-theme .add-site-btn:hover {
+    background-color: var(--light-card-hover-bg);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1rem;
+    }
+
+    .theme-settings,
+    .site-list {
+        grid-template-columns: 1fr;
+    }
+
+    .site-filters {
+        flex-direction: column;
+    }
+
+    .category-item {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}

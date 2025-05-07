@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航页面管理</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 登录界面 -->
+        <div class="login-container" id="loginContainer" style="display: none;">
+            <div class="login-box">
+                <h2>管理员登录</h2>
+                <form class="login-form" onsubmit="handleLogin(event)">
+                    <input type="text" id="username" placeholder="用户名" required>
+                    <input type="password" id="password" placeholder="密码" required>
+                    <button type="submit">登录</button>
+                </form>
+            </div>
+        </div>
+
+        <header class="admin-header">
+            <h1>导航页面管理</h1>
+            <div class="header-actions">
+                <button onclick="logout()" class="back-btn">退出登录</button>
+                <a href="index.html" class="back-btn">返回首页</a>
+            </div>
+        </header>
+
+        <div class="admin-content" style="display: block;">
+            <!-- 修改密码 -->
+            <section class="admin-section">
+                <h2>修改密码</h2>
+                <button onclick="showPasswordForm()" class="change-password-btn">修改密码</button>
+            </section>
+
+            <!-- 导航分类与网站管理 -->
+            <section class="admin-section">
+                <h2>导航分类与网站管理</h2>
+                <div class="unified-manager">
+                    <div class="category-section">
+                        <div class="category-header">
+                            <h3>分类管理</h3>
+                            <button class="add-category-btn">添加新分类</button>
+                        </div>
+                        <div class="category-list">
+                            <!-- 分类列表将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+                    <div class="sites-section">
+                        <div class="sites-header">
+                            <h3>网站管理</h3>
+                            <div class="site-filters">
+                                <input type="text" id="siteSearch" placeholder="搜索网站...">
+                                <button class="add-site-btn">添加新网站</button>
+                            </div>
+                        </div>
+                        <div class="sites-container">
+                            <!-- 网站列表将按分类分组显示 -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Logo设置 -->
+            <section class="admin-section">
+                <h2>Logo设置</h2>
+                <div class="logo-settings">
+                    <div class="setting-item">
+                        <label>当前Logo预览：</label>
+                        <div class="logo-preview">
+                            <img id="currentLogo" src="logo.svg" alt="当前Logo" onerror="this.src='default-icon.svg'">
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label for="logoUrl">Logo URL：</label>
+                        <div class="logo-input-group">
+                            <input type="text" id="logoUrl" placeholder="请输入Logo图片的URL（支持PNG、JPG、SVG等格式）">
+                            <input type="file" id="logoFile" accept=".svg,.png,.jpg,.jpeg" style="display: none;">
+                            <button type="button" class="upload-btn" onclick="document.getElementById('logoFile').click()">上传图片</button>
+                        </div>
+                    </div>
+                    <button onclick="saveLogo()" class="save-btn">保存Logo</button>
+                </div>
+            </section>
+
+            <!-- 版权信息设置 -->
+            <section class="admin-section">
+                <h2>版权信息设置</h2>
+                <div class="copyright-settings">
+                    <div class="setting-item">
+                        <label for="copyrightText">版权信息文本：</label>
+                        <input type="text" id="copyrightText" value="© 2024 My Navigation. 由 Terry 开发和维护">
+                    </div>
+                    <div class="setting-item">
+                        <label for="copyrightLink">开发者链接：</label>
+                        <input type="url" id="copyrightLink" value="https://github.com/yourusername">
+                    </div>
+                    <button onclick="saveCopyrightSettings()" class="save-btn">保存设置</button>
+                </div>
+            </section>
+
+            <!-- 搜索设置 -->
+            <section class="admin-section">
+                <h2>搜索设置</h2>
+                <div class="search-settings">
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="searchTitle" checked>
+                            搜索网站标题
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="searchDescription" checked>
+                            搜索网站描述
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="searchKeywords" checked>
+                            搜索关键词
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>搜索结果数量限制：</label>
+                        <input type="number" id="searchLimit" value="20" min="1" max="100">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- 网站卡片编辑表单 -->
+    <div class="site-form-container" id="siteFormContainer" style="display: none;">
+        <div class="site-form-box">
+            <h2 id="formTitle">添加新网站</h2>
+            <form id="siteForm" class="site-form">
+                <div class="form-group">
+                    <label for="siteTitle">网站标题</label>
+                    <input type="text" id="siteTitle" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="siteUrl">网站链接</label>
+                    <input type="url" id="siteUrl" name="url" required>
+                </div>
+                <div class="form-group">
+                    <label for="siteDescription">网站描述</label>
+                    <textarea id="siteDescription" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="siteCategory">所属分类</label>
+                    <select id="siteCategory" name="category" required>
+                        <!-- 分类选项将通过JavaScript动态生成 -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="siteIcon">网站图标</label>
+                    <div class="icon-input-group">
+                        <input type="text" id="siteIcon" name="icon" placeholder="请输入图标SVG路径或上传SVG文件">
+                        <input type="file" id="iconFile" accept=".svg" style="display: none;">
+                        <button type="button" class="upload-btn" onclick="document.getElementById('iconFile').click()">上传SVG</button>
+                    </div>
+                    <div id="iconPreview" class="icon-preview" style="display: none;">
+                        <img id="previewSvg" src="" alt="SVG预览">
+                        <button type="button" class="remove-icon-btn" onclick="removeIconPreview()">移除</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="siteKeywords">关键词</label>
+                    <input type="text" id="siteKeywords" name="keywords" placeholder="多个关键词用逗号分隔">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">保存</button>
+                    <button type="button" class="cancel-btn" onclick="closeSiteForm()">取消</button>
+                </div>
+            </form>
+            <div class="site-preview">
+                <h3>卡片预览</h3>
+                <div class="preview-card card">
+                    <img id="previewIcon" src="" alt="网站图标">
+                    <h4 id="previewTitle"></h4>
+                    <p id="previewDescription"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改密码表单 -->
+    <div class="login-container" id="passwordContainer" style="display: none;">
+        <div class="login-box">
+            <button class="close-btn" onclick="hidePasswordForm()">×</button>
+            <h2>修改密码</h2>
+            <form id="passwordForm" class="login-form" onsubmit="handlePasswordChange(event)">
+                <div class="form-group">
+                    <input type="password" id="currentPassword" name="currentPassword" placeholder="当前密码" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="newPassword" name="newPassword" placeholder="新密码" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="确认新密码" required>
+                </div>
+                <button type="submit" class="login-btn">确认修改</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+    <script src="auth.js"></script>
+    <script src="password.js"></script>
+    <script src="copyright.js"></script>
+</body>
+</html>

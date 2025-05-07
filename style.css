@@ -1,0 +1,833 @@
+:root {
+    /* 暗色主题变量 */
+    --dark-bg: #1a1b1e;
+    --dark-card-bg: #2a2b2e;
+    --dark-card-hover-bg: #323438;
+    --dark-text: #ffffff;
+    --dark-subtitle: #888;
+    --dark-border: rgba(255, 255, 255, 0.05);
+    --dark-shadow: rgba(0, 0, 0, 0.1);
+    --dark-shadow-hover: rgba(0, 0, 0, 0.2);
+
+    /* 亮色主题变量 */
+    --light-bg: #f5f5f7;
+    --light-card-bg: #ffffff;
+    --light-card-hover-bg: #f8f9fa;
+    --light-text: #1a1b1e;
+    --light-subtitle: #666;
+    --light-border: rgba(0, 0, 0, 0.05);
+    --light-shadow: rgba(0, 0, 0, 0.05);
+    --light-shadow-hover: rgba(0, 0, 0, 0.1);
+
+    /* 高对比度模式 */
+    --high-contrast-bg: #000000;
+    --high-contrast-card-bg: #1a1a1a;
+    --high-contrast-card-hover-bg: #2a2a2a;
+    --high-contrast-text: #ffffff;
+    --high-contrast-subtitle: #ffff00;
+    --high-contrast-border: rgba(255, 255, 255, 0.2);
+    --high-contrast-shadow: rgba(255, 255, 255, 0.15);
+    --high-contrast-shadow-hover: rgba(255, 255, 255, 0.25);
+
+    /* 柔和模式 */
+    --soft-bg: #f0f4f8;
+    --soft-card-bg: #ffffff;
+    --soft-card-hover-bg: #f8fafc;
+    --soft-text: #334155;
+    --soft-subtitle: #64748b;
+    --soft-border: rgba(51, 65, 85, 0.1);
+    --soft-shadow: rgba(51, 65, 85, 0.05);
+    --soft-shadow-hover: rgba(51, 65, 85, 0.1);
+
+    /* 夜间蓝光过滤模式 */
+    --warm-bg: #1a1a1a;
+    --warm-card-bg: #2a2a2a;
+    --warm-card-hover-bg: #333333;
+    --warm-text: #ffeddb;
+    --warm-subtitle: #ffd7b3;
+    --warm-border: rgba(255, 237, 219, 0.1);
+    --warm-shadow: rgba(255, 215, 179, 0.05);
+    --warm-shadow-hover: rgba(255, 215, 179, 0.1);
+
+    /* 动态渐变模式 */
+    --gradient-bg: linear-gradient(135deg, #1a1b1e, #2a2b2e);
+    --gradient-card-bg: rgba(255, 255, 255, 0.1);
+    --gradient-card-hover-bg: rgba(255, 255, 255, 0.15);
+    --gradient-text: #ffffff;
+    --gradient-subtitle: rgba(255, 255, 255, 0.7);
+    --gradient-border: rgba(255, 255, 255, 0.1);
+    --gradient-shadow: rgba(0, 0, 0, 0.2);
+    --gradient-shadow-hover: rgba(0, 0, 0, 0.3);
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 主题样式 */
+body.light-theme {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+body.high-contrast-theme {
+    background-color: var(--high-contrast-bg);
+    color: var(--high-contrast-text);
+}
+
+body.soft-theme {
+    background-color: var(--soft-bg);
+    color: var(--soft-text);
+}
+
+body.warm-theme {
+    background-color: var(--warm-bg);
+    color: var(--warm-text);
+}
+
+body.gradient-theme {
+    background: var(--gradient-bg);
+    color: var(--gradient-text);
+}
+
+/* 主题切换按钮组 */
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.theme-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--dark-border);
+    background: var(--dark-card-bg);
+    color: var(--dark-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+}
+
+.admin-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    text-decoration: underline;
+}
+
+.admin-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--dark-card-hover-bg);
+}
+
+.light-theme .admin-btn {
+    background-color: var(--light-card-bg);
+    color: var(--light-text);
+}
+
+.light-theme .admin-btn:hover {
+    background-color: var(--light-card-hover-bg);
+}
+
+.theme-btn.active {
+    border-color: var(--dark-text);
+    box-shadow: 0 0 10px var(--dark-shadow);
+}
+
+/* 页脚样式 */
+.site-footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    border-top: 1px solid var(--dark-border);
+}
+
+.site-footer p {
+    color: var(--dark-subtitle);
+    font-size: 0.9rem;
+}
+
+.site-footer a {
+    color: var(--dark-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: var(--dark-subtitle);
+}
+
+/* 主题适配 */
+.light-theme .site-footer {
+    border-top-color: var(--light-border);
+}
+
+.light-theme .site-footer p {
+    color: var(--light-subtitle);
+}
+
+.light-theme .site-footer a {
+    color: var(--light-text);
+}
+
+.light-theme .site-footer a:hover {
+    color: var(--light-subtitle);
+}
+
+/* 登录弹窗样式 */
+.login-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.login-box {
+    background-color: var(--light-card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px var(--light-shadow);
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+}
+
+.login-box h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--light-text);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.login-form input {
+    padding: 0.8rem;
+    border: 1px solid var(--light-border);
+    border-radius: 8px;
+    background-color: var(--light-card-bg);
+    color: var(--light-text);
+    width: 100%;
+}
+
+.login-form button {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--light-card-hover-bg);
+    color: var(--light-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.login-form button:hover {
+    background-color: var(--light-text);
+    color: var(--light-card-bg);
+}
+
+/* Logo设置样式 */
+.logo-settings {
+    background-color: var(--light-card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.logo-preview {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed var(--light-border);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: var(--light-bg);
+}
+
+.logo-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.logo-input-group {
+    display: flex;
+    gap: 1rem;
+    margin: 0.5rem 0;
+}
+
+.logo-input-group input[type="text"] {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid var(--light-border);
+    border-radius: 8px;
+    background-color: var(--light-card-bg);
+    color: var(--light-text);
+}
+
+.logo-input-group .upload-btn {
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--light-card-hover-bg);
+    color: var(--light-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logo-input-group .upload-btn:hover {
+    background-color: var(--light-card-bg);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--light-text);
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: var(--light-card-hover-bg);
+}
+
+/* 主题适配 */
+body.dark-theme .login-box,
+body.warm-theme .login-box,
+body.high-contrast-theme .login-box {
+    background-color: var(--dark-card-bg);
+    box-shadow: 0 4px 12px var(--dark-shadow);
+}
+
+body.dark-theme .login-box h2,
+body.warm-theme .login-box h2,
+body.high-contrast-theme .login-box h2,
+body.dark-theme .close-btn,
+body.warm-theme .close-btn,
+body.high-contrast-theme .close-btn {
+    color: var(--dark-text);
+}
+
+body.dark-theme .login-form input,
+body.warm-theme .login-form input,
+body.high-contrast-theme .login-form input {
+    border-color: var(--dark-border);
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+}
+
+body.dark-theme .login-form button,
+body.warm-theme .login-form button,
+body.high-contrast-theme .login-form button {
+    background-color: var(--dark-card-hover-bg);
+    color: var(--dark-text);
+}
+
+body.dark-theme .login-form button:hover,
+body.warm-theme .login-form button:hover,
+body.high-contrast-theme .login-form button:hover {
+    background-color: var(--dark-text);
+    color: var(--dark-card-bg);
+}
+
+body.soft-theme .login-box {
+    background-color: var(--soft-card-bg);
+    box-shadow: 0 4px 12px var(--soft-shadow);
+}
+
+body.soft-theme .login-box h2,
+body.soft-theme .close-btn {
+    color: var(--soft-text);
+}
+
+body.soft-theme .login-form input {
+    border-color: var(--soft-border);
+    background-color: var(--soft-card-bg);
+    color: var(--soft-text);
+}
+
+body.soft-theme .login-form button {
+    background-color: var(--soft-card-hover-bg);
+    color: var(--soft-text);
+}
+
+body.soft-theme .login-form button:hover {
+    background-color: var(--soft-text);
+    color: var(--soft-card-bg);
+}
+
+body.gradient-theme .login-box {
+    background-color: var(--gradient-card-bg);
+    box-shadow: 0 4px 12px var(--gradient-shadow);
+}
+
+body.gradient-theme .login-box h2,
+body.gradient-theme .close-btn {
+    color: var(--gradient-text);
+}
+
+body.gradient-theme .login-form input {
+    border-color: var(--gradient-border);
+    background-color: var(--gradient-card-bg);
+    color: var(--gradient-text);
+}
+
+body.gradient-theme .login-form button {
+    background-color: var(--gradient-card-hover-bg);
+    color: var(--gradient-text);
+}
+
+body.gradient-theme .login-form button:hover {
+    background-color: var(--gradient-text);
+    color: var(--gradient-card-bg);
+}
+
+/* 主题按钮特定样式 */
+.theme-btn.high-contrast {
+    background: #000;
+    color: #fff;
+}
+
+.theme-btn.soft {
+    background: #f0f4f8;
+    color: #334155;
+}
+
+.theme-btn.warm {
+    background: #2a2a2a;
+    color: #ffeddb;
+}
+
+.theme-btn.gradient {
+    background: linear-gradient(135deg, #1a1b1e, #2a2b2e);
+    color: #fff;
+}
+
+.theme-btn.system {
+    background: #fff;
+    color: #1a1b1e;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 2rem 0;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--dark-text);
+    font-weight: 700;
+}
+
+.light-theme h1 {
+    color: var(--light-text);
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #4a9eff, #6c4aff, #9b4aff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: var(--dark-subtitle);
+    margin-bottom: 1.5rem;
+}
+
+.light-theme .subtitle {
+    color: var(--light-subtitle);
+}
+
+.search-box {
+    margin: 2rem auto;
+    max-width: 600px;
+    position: relative;
+}
+
+.search-results {
+    margin-top: 1rem;
+    color: var(--dark-subtitle);
+    text-align: left;
+    background: var(--dark-card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px var(--dark-shadow);
+}
+
+.light-theme .search-results {
+    color: var(--light-subtitle);
+    background: var(--light-card-bg);
+    box-shadow: 0 2px 8px var(--light-shadow);
+}
+
+.search-results h3 {
+    margin-bottom: 1.5rem;
+    color: var(--dark-text);
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.light-theme .search-results h3 {
+    color: var(--light-text);
+}
+
+.result-category {
+    margin-bottom: 2rem;
+}
+
+.result-category h4 {
+    color: var(--dark-subtitle);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.light-theme .result-category h4 {
+    color: var(--light-subtitle);
+}
+
+.result-category .card-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.no-results {
+    text-align: center;
+    color: var(--dark-subtitle);
+    font-size: 1.1rem;
+    margin: 2rem 0;
+}
+
+.light-theme .no-results {
+    color: var(--light-subtitle);
+}
+
+#searchInput {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--dark-shadow);
+}
+
+.light-theme #searchInput {
+    background-color: var(--light-card-bg);
+    color: var(--light-text);
+    box-shadow: 0 2px 8px var(--light-shadow);
+}
+
+#searchInput:focus {
+    outline: none;
+    background-color: var(--dark-card-hover-bg);
+    box-shadow: 0 0 0 2px rgba(106, 74, 255, 0.3);
+}
+
+.light-theme #searchInput:focus {
+    background-color: var(--light-card-hover-bg);
+}
+
+.nav-section {
+    margin-bottom: 4rem;
+    padding: 0 1rem;
+}
+
+.nav-section h3 {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    color: #aaa;
+    text-align: center;
+    font-weight: 600;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.8rem;
+    background-color: var(--dark-card-bg);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--dark-text);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px var(--dark-shadow);
+    border: 1px solid var(--dark-border);
+}
+
+.light-theme .card {
+    background-color: var(--light-card-bg);
+    color: var(--light-text);
+    box-shadow: 0 4px 12px var(--light-shadow);
+    border: 1px solid var(--light-border);
+}
+
+.high-contrast-theme .card {
+    background-color: var(--high-contrast-card-bg);
+    border: 2px solid var(--high-contrast-border);
+    color: var(--high-contrast-text);
+    box-shadow: 0 2px 8px var(--high-contrast-shadow);
+}
+
+.soft-theme .card {
+    background-color: var(--soft-card-bg);
+    border: 1px solid var(--soft-border);
+    color: var(--soft-text);
+    box-shadow: 0 2px 8px var(--soft-shadow);
+}
+
+.warm-theme .card {
+    background-color: var(--warm-card-bg);
+    border: 1px solid var(--warm-border);
+    color: var(--warm-text);
+    box-shadow: 0 2px 8px var(--warm-shadow);
+}
+
+.gradient-theme .card {
+    background-color: var(--gradient-card-bg);
+    border: 1px solid var(--gradient-border);
+    color: var(--gradient-text);
+    box-shadow: 0 2px 8px var(--gradient-shadow);
+    backdrop-filter: blur(5px);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    background-color: var(--dark-card-hover-bg);
+    box-shadow: 0 8px 16px var(--dark-shadow-hover);
+}
+
+.light-theme .card:hover {
+    background-color: var(--light-card-hover-bg);
+    box-shadow: 0 8px 16px var(--light-shadow-hover);
+}
+
+.card img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+}
+
+.card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: var(--dark-subtitle);
+    text-align: center;
+}
+
+.light-theme .card p {
+    color: var(--light-subtitle);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .card img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .card h4 {
+        font-size: 1rem;
+    }
+
+    .card p {
+        font-size: 0.8rem;
+    }
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--dark-card-bg);
+    border: 1px solid var(--dark-border);
+    color: var(--dark-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--dark-shadow);
+}
+
+.light-theme .theme-toggle {
+    background-color: var(--light-card-bg);
+    border: 1px solid var(--light-border);
+    color: var(--light-text);
+    box-shadow: 0 2px 8px var(--light-shadow);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* 搜索结果样式 */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    border-radius: 12px;
+    background-color: var(--dark-card-bg);
+    border: 1px solid var(--dark-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.search-results-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.search-results-title {
+    color: var(--dark-text);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.search-results-count {
+    color: var(--dark-subtitle);
+    font-size: 0.9rem;
+}
+
+.light-theme .search-results-header {
+    border-bottom: 1px solid var(--light-border);
+}
+
+.light-theme .search-results-title {
+    color: var(--light-text);
+}
+
+.light-theme .search-results-count {
+    color: var(--light-subtitle);
+}
+
+.light-theme .search-results {
+    background-color: var(--light-card-bg);
+    border: 1px solid var(--light-border);
+}
+
+.search-results .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.search-results .no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--dark-text);
+    font-size: 1.1rem;
+}
+
+.light-theme .search-results .no-results {
+    color: var(--light-text);
+}
+:root {
+    --image-size: 60px;
+    --image-border-radius: 4px;
+}

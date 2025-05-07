@@ -1,0 +1,51 @@
+<!-- 网站卡片编辑表单 -->
+<div class="site-form-container" id="siteFormContainer" style="display: none;">
+    <div class="site-form-box">
+        <h2 id="formTitle">添加新网站</h2>
+        <form id="siteForm" class="site-form">
+            <div class="form-group">
+                <label for="siteTitle">网站标题</label>
+                <input type="text" id="siteTitle" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="siteUrl">网站链接</label>
+                <input type="url" id="siteUrl" name="url" required>
+            </div>
+            <div class="form-group">
+                <label for="siteDescription">网站描述</label>
+                <textarea id="siteDescription" name="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="siteCategory">所属分类</label>
+                <select id="siteCategory" name="category" required>
+                    <option value="">请选择分类</option>
+                    <option value="commonSites">常用网站</option>
+                    <option value="learningResources">学习资源</option>
+                    <option value="devTools">开发工具</option>
+                    <option value="designResources">设计资源</option>
+                    <option value="onlineTools">在线工具</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="siteIcon">网站图标</label>
+                <input type="text" id="siteIcon" name="icon" placeholder="请输入图标SVG路径" required>
+            </div>
+            <div class="form-group">
+                <label for="siteKeywords">关键词</label>
+                <input type="text" id="siteKeywords" name="keywords" placeholder="多个关键词用逗号分隔">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">保存</button>
+                <button type="button" class="cancel-btn" onclick="closeSiteForm()">取消</button>
+            </div>
+        </form>
+        <div class="site-preview">
+            <h3>卡片预览</h3>
+            <div class="preview-card card">
+                <img id="previewIcon" src="" alt="网站图标">
+                <h4 id="previewTitle"></h4>
+                <p id="previewDescription"></p>
+            </div>
+        </div>
+    </div>
+</div>

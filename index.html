@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-Subject English Enlightenment</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="auth.js"></script>
+    <script src="index.js"></script>
+    <script src="copyright.js"></script>
+</head>
+<body>
+    <div class="theme-switcher">
+        <button class="admin-btn" title="管理入口" id="adminLoginBtn">管理入口</button>
+        <button class="theme-btn high-contrast" title="高对比度模式" data-theme="high-contrast-theme">🌘</button>
+        <button class="theme-btn soft" title="柔和模式" data-theme="soft-theme">🌤</button>
+        <button class="theme-btn warm" title="夜间模式" data-theme="warm-theme">🌙</button>
+        <button class="theme-btn system" title="系统模式" data-theme="light-theme">💻</button>
+        <button class="theme-btn gradient" title="渐变模式" data-theme="gradient-theme">🌈</button>
+    </div>
+
+    <!-- 登录弹窗 -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <button class="close-btn" onclick="hideLoginForm()">×</button>
+            <h2>管理员登录</h2>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <input type="text" id="username" name="username" placeholder="用户名" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="密码" required>
+                </div>
+                <button type="submit" class="login-btn">登录</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="logo.svg" alt="网站Logo" class="site-logo" onerror="this.src='default-icon.svg'">
+            </div>
+            <h1>Hello</h1>
+            <h2>Welcome to All-Subject English Enlightenment</h2>
+            <p class="subtitle">系统（平台）由 Erin 英语全科启蒙团队独立开发完成</p>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索...">
+                <div id="searchResults" class="search-results" style="display: none;">
+                    <div class="search-results-header">
+                        <h3 class="search-results-title">搜索结果</h3>
+                        <p class="search-results-count">找到 <span id="resultCount">0</span> 个匹配项</p>
+                    </div>
+                    <div id="resultCategories"></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="nav-section" id="commonSites" data-category="常用网站">
+            <h3>⭐ 常用网站</h3>
+            <div class="card-container">
+                <a href="https://linux.do" class="card" data-keywords="linux系统社区">
+                    <img src="icons/linux.svg" alt="Linux.do">
+                    <h4>Linux.do</h4>
+                    <p>系统技术社区</p>
+                </a>
+                <a href="https://google.com" class="card" data-keywords="全球最大搜索引擎">
+                    <img src="icons/google.svg" alt="Google">
+                    <h4>Google</h4>
+                    <p>全球最大搜索引擎</p>
+                </a>
+                <a href="https://github.com" class="card" data-keywords="代码托管平台">
+                    <img src="icons/github.svg" alt="GitHub">
+                    <h4>GitHub</h4>
+                    <p>代码托管平台</p>
+                </a>
+                <a href="https://stackoverflow.com" class="card" data-keywords="程序员问答社区">
+                    <img src="icons/stackoverflow.svg" alt="Stack Overflow">
+                    <h4>Stack Overflow</h4>
+                    <p>程序员问答社区</p>
+                </a>
+                <a href="https://chat.openai.com" class="card" data-keywords="AI智能助手">
+                    <img src="icons/chatgpt.svg" alt="ChatGPT">
+                    <h4>ChatGPT</h4>
+                    <p>AI智能助手</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="nav-section" id="learningResources" data-category="学习资源">
+            <h3>📚 学习资源</h3>
+            <div class="card-container">
+                <a href="https://www.imooc.com" class="card" data-keywords="视频学习平台">
+                    <img src="icons/imooc.svg" alt="慕课网">
+                    <h4>慕课网</h4>
+                    <p>视频学习平台</p>
+                </a>
+                <a href="https://www.zhihu.com" class="card" data-keywords="问答社区">
+                    <img src="icons/zhihu.svg" alt="知乎">
+                    <h4>知乎</h4>
+                    <p>问答社区</p>
+                </a>
+                <a href="https://juejin.cn" class="card" data-keywords="高质量技术社区">
+                    <img src="icons/juejin.svg" alt="掘金">
+                    <h4>掘金</h4>
+                    <p>高质量技术社区</p>
+                </a>
+                <a href="https://leetcode.com" class="card" data-keywords="算法刷题平台">
+                    <img src="icons/leetcode.svg" alt="LeetCode">
+                    <h4>LeetCode</h4>
+                    <p>算法刷题平台</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="nav-section" id="devTools">
+            <h3>🛠 开发工具</h3>
+            <div class="card-container">
+                <a href="https://code.visualstudio.com" class="card" data-keywords="强大的代码编辑器">
+                    <img src="icons/vscode.svg" alt="VS Code">
+                    <h4>VS Code</h4>
+                    <p>强大的代码编辑器</p>
+                </a>
+                <a href="https://www.postman.com" class="card" data-keywords="API测试工具">
+                    <img src="icons/postman.svg" alt="Postman">
+                    <h4>Postman</h4>
+                    <p>API测试工具</p>
+                </a>
+                <a href="https://git-scm.com" class="card" data-keywords="版本控制工具">
+                    <img src="icons/git.svg" alt="Git">
+                    <h4>Git</h4>
+                    <p>版本控制工具</p>
+                </a>
+                <a href="https://www.docker.com" class="card" data-keywords="容器化平台">
+                    <img src="icons/docker.svg" alt="Docker">
+                    <h4>Docker</h4>
+                    <p>容器化平台</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="nav-section" id="designResources">
+            <h3>🎨 设计资源</h3>
+            <div class="card-container">
+                <a href="https://www.figma.com" class="card" data-keywords="在线设计工具">
+                    <img src="icons/figma.svg" alt="Figma">
+                    <h4>Figma</h4>
+                    <p>在线设计工具</p>
+                </a>
+                <a href="https://dribbble.com" class="card" data-keywords="设计师社区">
+                    <img src="icons/dribbble.svg" alt="Dribbble">
+                    <h4>Dribbble</h4>
+                    <p>设计师社区</p>
+                </a>
+                <a href="https://www.behance.net" class="card" data-keywords="创意设计平台">
+                    <img src="icons/behance.svg" alt="Behance">
+                    <h4>Behance</h4>
+                    <p>创意设计平台</p>
+                </a>
+                <a href="https://iconfont.cn" class="card" data-keywords="图标资源库">
+                    <img src="icons/iconfont.svg" alt="IconFont">
+                    <h4>IconFont</h4>
+                    <p>图标资源库</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="nav-section" id="onlineTools">
+            <h3>🔧 在线工具</h3>
+            <div class="card-container">
+                <a href="https://jsoneditoronline.org" class="card" data-keywords="JSON在线编辑器">
+                    <img src="icons/json.svg" alt="JSON Editor">
+                    <h4>JSON Editor</h4>
+                    <p>JSON在线编辑器</p>
+                </a>
+                <a href="https://caniuse.com" class="card" data-keywords="浏览器兼容性查询">
+                    <img src="icons/caniuse.svg" alt="Can I Use">
+                    <h4>Can I Use</h4>
+                    <p>浏览器兼容性查询</p>
+                </a>
+                <a href="https://tinypng.com" class="card" data-keywords="图片压缩工具">
+                    <img src="icons/tinypng.svg" alt="TinyPNG">
+                    <h4>TinyPNG</h4>
+                    <p>图片压缩工具</p>
+                </a>
+                <a href="https://carbon.now.sh" class="card" data-keywords="代码图片生成器">
+                    <img src="icons/carbon.svg" alt="Carbon">
+                    <h4>Carbon</h4>
+                    <p>代码图片生成器</p>
+                </a>
+            </div>
+        </section>
+    </div>
+    <footer class="site-footer">
+        <p>© 2024 All-Subject English Enlightenment. 由 <a href="https://github.com/yourusername" target="_blank">Terry</a> 开发和维护</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 主题切换功能
+            const themeBtns = document.querySelectorAll('.theme-btn');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // 从本地存储加载主题
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.className = savedTheme;
+                themeBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.theme === savedTheme);
+                });
+            } else if (prefersDarkScheme.matches) {
+                document.body.className = '';
+                themeBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.theme === '');
+                });
+            }
+            
+            // 主题切换事件监听
+            themeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const theme = btn.dataset.theme;
+                    document.body.className = theme;
+                    localStorage.setItem('theme', theme);
+                    
+                    // 更新按钮激活状态
+                    themeBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+            
+            // 监听系统主题变化
+            prefersDarkScheme.addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    document.body.className = e.matches ? '' : 'light-theme';
+                }
+            });
+
+
+            const searchInput = document.getElementById('searchInput');
+            const cards = document.querySelectorAll('.card');
+            const sections = document.querySelectorAll('.nav-section');
+            const searchResults = document.getElementById('searchResults');
+            const resultCategories = document.getElementById('resultCategories');
+
+            // 搜索功能
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+
+                // 清空现有的搜索结果
+                resultCategories.innerHTML = '';
+
+                if (!searchTerm) {
+                    // 显示所有分类和卡片
+                    sections.forEach(section => section.style.display = 'block');
+                    cards.forEach(card => card.style.display = 'flex');
+                    searchResults.style.display = 'none';
+                    return;
+                }
+
+                // 隐藏所有分类
+                sections.forEach(section => section.style.display = 'none');
+
+                // 创建卡片容器
+                const cardContainer = document.createElement('div');
+                cardContainer.className = 'card-container';
+
+                // 搜索匹配的卡片
+                let matchedCards = [];
+                cards.forEach(card => {
+                    const keywords = card.getAttribute('data-keywords').toLowerCase();
+                    const title = card.querySelector('h4').textContent.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+
+                    if (keywords.includes(searchTerm) || 
+                        title.includes(searchTerm) || 
+                        description.includes(searchTerm)) {
+                        const clonedCard = card.cloneNode(true);
+                        cardContainer.appendChild(clonedCard);
+                        matchedCards.push(clonedCard);
+                    }
+                });
+
+                // 更新搜索结果计数
+                const resultCount = document.getElementById('resultCount');
+                resultCount.textContent = matchedCards.length;
+
+                // 更新搜索结果显示
+                searchResults.style.display = 'block';
+
+                // 添加搜索结果到容器
+                if (matchedCards.length > 0) {
+                    resultCategories.appendChild(cardContainer);
+                } else {
+                    resultCategories.innerHTML = '<p class="no-results">没有找到匹配的结果</p>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
