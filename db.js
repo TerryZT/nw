@@ -2,7 +2,10 @@
 
 class DataService {
     constructor() {
-        this.apiBaseUrl = 'http://localhost:3000/api'; // API基础路径
+        // 根据当前环境动态设置API基础路径
+        this.apiBaseUrl = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3000/api'
+            : 'https://navigation-bnec.vercel.app/api';
         this.isAuthenticated = false;
     }
 
@@ -92,7 +95,10 @@ class DataService {
 
 class MongoDBService {
     constructor() {
-        this.apiBaseUrl = 'http://localhost:3000/api';
+        // 根据当前环境动态设置API基础路径
+        this.apiBaseUrl = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3000/api'
+            : 'https://navigation-bnec.vercel.app/api';
         this.isAuthenticated = false;
     }
 
