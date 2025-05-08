@@ -3,7 +3,7 @@
 class DataService {
     constructor() {
         // 根据当前环境动态设置API基础路径
-        this.apiBaseUrl = window.location.origin + '/api';
+        this.apiBaseUrl = process.env.NODE_ENV === 'production' ? process.env.API_BASE_URL || 'https://api.yourdomain.com' : window.location.origin + '/api';
         this.isAuthenticated = false;
     }
 
@@ -94,11 +94,11 @@ class DataService {
 class MongoDBService {
     constructor() {
         // 根据当前环境动态设置API基础路径
-        this.apiBaseUrl = window.location.origin + '/api';
+        this.apiBaseUrl = process.env.NODE_ENV === 'production' ? process.env.API_BASE_URL || 'https://api.yourdomain.com' : window.location.origin + '/api';
         this.isAuthenticated = false;
         // MongoDB连接配置
-        this.mongoUrl = 'mongodb+srv://terrylaoshi:zou92324@cluster0.zbikr5y.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-        this.dbName = 'sample_mflix';
+        this.mongoUrl = process.env.MONGODB_URL || 'mongodb://localhost:27017';
+        this.dbName = process.env.MONGODB_DB || 'default_db';
     }
 
     // 测试MongoDB连接
