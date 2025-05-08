@@ -3,9 +3,7 @@
 class DataService {
     constructor() {
         // 根据当前环境动态设置API基础路径
-        this.apiBaseUrl = window.location.hostname === 'localhost' 
-            ? 'http://localhost:3000/api'
-            : window.location.origin + '/api';
+        this.apiBaseUrl = window.location.origin + '/api';
         this.isAuthenticated = false;
     }
 
@@ -96,10 +94,51 @@ class DataService {
 class MongoDBService {
     constructor() {
         // 根据当前环境动态设置API基础路径
-        this.apiBaseUrl = window.location.hostname === 'localhost' 
-            ? 'http://localhost:3000/api'
-            : window.location.origin + '/api';
+        this.apiBaseUrl = window.location.origin + '/api';
         this.isAuthenticated = false;
+        // MongoDB连接配置
+        this.mongoUrl = 'mongodb+srv://terrylaoshi:zou92324@cluster0.zbikr5y.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+        this.dbName = 'sample_mflix';
+    }
+
+    // 测试MongoDB连接
+    async testConnection() {
+        try {
+            console.log('正在测试MongoDB连接...');
+            const response = await fetch(`${this.apiBaseUrl}/db/test-connection`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    mongoUrl: this.mongoUrl,
+                    dbName: this.dbName
+                })
+            });
+
+            if (!response.ok) {
+                if (response.status === 404) {
+                    throw new Error('连接测试API端点不存在，请检查服务器是否运行正常');
+                } else if (response.status >= 500) {
+                    throw new Error('服务器内部错误，请稍后再试');
+                }
+                const errorData = await response.json();
+                throw new Error(errorData.message || '数据库连接测试失败');
+            }
+
+            const result = await response.json();
+            console.log('MongoDB连接测试成功！');
+            console.log('数据库信息:', {
+                url: this.mongoUrl,
+                database: this.dbName,
+                status: '已连接',
+                ...result
+            });
+            return result;
+        } catch (error) {
+            console.error('MongoDB连接测试失败:', error.message);
+            throw new Error(`MongoDB连接测试失败: ${error.message}`);
+        }
     }
 
     // 分类管理相关操作
